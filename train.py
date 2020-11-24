@@ -1,4 +1,5 @@
 # comment full_tokenizer.max_len = 999999
+# transformers.get_linear_schedule_with_warmup(optimizer, num_warmup_steps = warmup_steps, num_training_steps = total_steps, last_epoch=- 1)
 
 import transformers
 import torch
@@ -143,8 +144,8 @@ def main():
     print('total steps = {}'.format(total_steps))
 
     optimizer = transformers.AdamW(model.parameters(), lr=lr, correct_bias=True)
-    scheduler = transformers.WarmupLinearSchedule(optimizer, warmup_steps=warmup_steps,
-                                                          t_total=total_steps)
+    scheduler = transformers.get_linear_schedule_with_warmup(optimizer, num_warmup_steps = warmup_steps, num_training_steps = total_steps, last_epoch=- 1)
+
     if fp16:
         try:
             from apex import amp
