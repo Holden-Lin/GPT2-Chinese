@@ -5,6 +5,26 @@
 - Chinese version of GPT2 training code, using BERT tokenizer or BPE tokenizer. It is based on the extremely awesome repository from HuggingFace team [Transformers](https://github.com/huggingface/transformers). Can write poems, news, novels, or train general language models. Support char level, word level and BPE level. Support large training corpus.
 - 中文的GPT2训练代码，使用BERT的Tokenizer或Sentencepiece的BPE model（感谢[kangzhonghua](https://github.com/kangzhonghua)的贡献，实现BPE模式需要略微修改train.py的代码）。可以写诗，新闻，小说，或是训练通用语言模型。支持字为单位或是分词模式或是BPE模式（需要略微修改train.py的代码）。支持大语料训练。
 
+## 使用方法
+
+- 复制本repository的内容
+- 在项目根目录建立data文件夹。将训练语料以train.json为名放入data目录中。**train.json里是一个json列表，列表的每个元素都分别是一篇要训练的文章的文本内容（而不是文件链接）**。
+- 运行train.py文件，勾选 --raw ，会自动预处理数据。
+- 预处理完成之后，会自动执行训练。
+- 训练完后运行下面脚本生成文本
+
+### 生成文本
+
+``` bash
+python ./generate.py --length=50 --nsamples=4 --prefix=xxx --fast_pattern --save_samples --save_samples_path=/mnt/xx
+```
+- **--fast_pattern** (由[LeeCP8](https://github.com/LeeCP8)贡献）：如果生成的length参数比较小，速度基本无差别，我个人测试length=250时，快了2秒，所以如果不添加--fast_pattern，那么默认不采用fast_pattern方式。
+- **--save_samples**：默认将输出样本直接打印到控制台，传递此参数，将保存在根目录下的**samples.txt**。
+- **--save_samples_path**：可自行指定保存的目录，默认可递归创建多级目录，不可以传递文件名称，文件名称默认为**samples.txt**。
+
+## UPDATE 11.24.2020
+- 解决了transformer版本不兼容导致的两个常见报错
+
 ## UPDATE 11.03.2020
 
 - 本项目新增了古诗词GPT-2预训练模型和对联GPT-2预训练模型。模型由[UER-py](https://github.com/dbiir/UER-py)项目训练得到。欢迎大家使用。
@@ -36,21 +56,6 @@
 ## 项目状态
 
 - 在本项目公布时，中文的GPT2资源几乎为零，而现在情况已有所不同。其次项目功能已经基本稳定，因此目前本项目暂已停止更新。我写下这些代码的初衷是练习Pytorch的使用，即使后期做了一些填坑工作，难免还是有很多不成熟的地方，也请谅解。
-
-## 使用方法
-
-- 在项目根目录建立data文件夹。将训练语料以train.json为名放入data目录中。**train.json里是一个json列表，列表的每个元素都分别是一篇要训练的文章的文本内容（而不是文件链接）**。
-- 运行train.py文件，勾选 --raw ，会自动预处理数据。
-- 预处理完成之后，会自动执行训练。
-
-### 生成文本
-
-``` bash
-python ./generate.py --length=50 --nsamples=4 --prefix=xxx --fast_pattern --save_samples --save_samples_path=/mnt/xx
-```
-- **--fast_pattern** (由[LeeCP8](https://github.com/LeeCP8)贡献）：如果生成的length参数比较小，速度基本无差别，我个人测试length=250时，快了2秒，所以如果不添加--fast_pattern，那么默认不采用fast_pattern方式。
-- **--save_samples**：默认将输出样本直接打印到控制台，传递此参数，将保存在根目录下的**samples.txt**。
-- **--save_samples_path**：可自行指定保存的目录，默认可递归创建多级目录，不可以传递文件名称，文件名称默认为**samples.txt**。
 
 ## 文件结构
 
