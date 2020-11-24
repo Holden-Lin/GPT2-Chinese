@@ -1,3 +1,5 @@
+# comment full_tokenizer.max_len = 999999
+
 import transformers
 import torch
 import os
@@ -86,7 +88,7 @@ def main():
         full_tokenizer = get_encoder(args.encoder_json, args.vocab_bpe)
     else:
         full_tokenizer = tokenization_bert.BertTokenizer(vocab_file=args.tokenizer_path)
-    full_tokenizer.max_len = 999999
+    #full_tokenizer.max_len = 999999
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print('using device:', device)
 
